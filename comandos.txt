@@ -23,13 +23,14 @@ bin/kafka-topics.sh --create --topic chat --bootstrap-server localhost:9094 --pa
 - alterando quantidade de partições de um tópico
 bin/kafka-topics.sh --alter --topic chat --bootstrap-server localhost:9094 --partitions 3
 
-
-## Comandos dentro de um broker
-- Producer mensagens(Comandos dentro de um broker)
-kafka-console-producer --bootstrap-server:localhost:9094 --topic=chat
+- Producer mensagens
+kafka-console-producer --topic=chat --bootstrap-server:localhost:9094
 
 - Consumer mensagens(Comandos dentro de um broker)
-kafka-console-consumer --bootstrap-server=localhost:9094 --topic=chat
+kafka-console-consumer --topic=chat --bootstrap-server=localhost:9094
 
-- Consumer mensagens já lidas(Comandos dentro de um broker)
-kafka-console-consumer --bootstrap-server=localhost:9094 --topic=chat --from-beginning
+- Consumer mensagens antigas ou já lidas.
+kafka-console-consumer --topic=chat --bootstrap-server=localhost:9094 --from-beginning
+
+- Visualizar em qual partição a mensagem foi inscrita e qual o números do offset
+kafka/bin/kafka-console-consumer.sh --topic=chat --bootstrap-server=localhost:9094 --from-beginning --property print.partition=true  --property print.offset=true
