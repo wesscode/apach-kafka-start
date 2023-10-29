@@ -11,8 +11,25 @@ bin/kafka-topics.sh  --create --topic <nomeTopico> --bootstrap-server <endereco 
 bin/kafka-topics.sh  --list --bootstrap-server <endereco broker>
 bin/kafka-topics.sh  --list --bootstrap-server localhost:9094, localhost:9095
 
+- Lista informações sobre um tópico
+bin/kafka-topics.sh --describe  --topic <nomeTopic> --bootstrap-server localhost:9094
+
 - excluir tópico
 bin/kafka-topics.sh  --delete --topic cursos --bootstrap-server<endereco broker>
 
 - criando tópico com partições e fator de replicação
 bin/kafka-topics.sh --create --topic chat --bootstrap-server localhost:9094 --partitions 2 --replication-factor 2
+
+- alterando quantidade de partições de um tópico
+bin/kafka-topics.sh --alter --topic chat --bootstrap-server localhost:9094 --partitions 3
+
+
+## Comandos dentro de um broker
+- Producer mensagens(Comandos dentro de um broker)
+kafka-console-producer --bootstrap-server:localhost:9094 --topic=chat
+
+- Consumer mensagens(Comandos dentro de um broker)
+kafka-console-consumer --bootstrap-server=localhost:9094 --topic=chat
+
+- Consumer mensagens já lidas(Comandos dentro de um broker)
+kafka-console-consumer --bootstrap-server=localhost:9094 --topic=chat --from-beginning
