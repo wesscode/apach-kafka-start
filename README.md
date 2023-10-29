@@ -12,4 +12,6 @@
 ## Fator de replicação
     * Nós proporciona garantia de uma maior disponibilidade do sistema.
     * Tendo seu tamanho máx até a quantidade de brokers do cluster.
-    
+
+## Tópicos
+    * Quanto mais partições em um tópico aumenta a performance de leitura e escrita daquele tópico.
