@@ -1,0 +1,18 @@
+- subir servidor do kafka
+ bin/kafka-server-start.sh config/server.properties
+
+- subir servidor do zookeeper
+ bin/zookeeper-server-start.sh config/zookeeper.properties
+
+- criando topico
+bin/kafka-topics.sh  --create --topic <nomeTopico> --bootstrap-server <endereco broker>
+
+- listando tópico de um cluster
+bin/kafka-topics.sh  --list --bootstrap-server <endereco broker>
+bin/kafka-topics.sh  --list --bootstrap-server localhost:9094, localhost:9095
+
+- excluir tópico
+bin/kafka-topics.sh  --delete --topic cursos --bootstrap-server<endereco broker>
+
+- criando tópico com partições e fator de replicação
+bin/kafka-topics.sh --create --topic chat --bootstrap-server localhost:9094 --partitions 2 --replication-factor 2
