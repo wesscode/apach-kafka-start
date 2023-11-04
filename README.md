@@ -41,3 +41,11 @@
 **- Instalar dependências para o projeto Produtor**
 
      dotnet add Projeto package Confluent.Producer
+
+**- Instalar tool dotnet para contratos AVRO**
+
+    dotnet tool install --global Apache.Avro.Tools
+
+**- Instalar  Ferramenta que informa ao produtor e consumidor qual serializar ele irá deve utilizar e responsável por se comunicar com servidor do schemaRegistry**
+
+    dotnet add Projeto package Confluent.SchemaRegistry.Serdes.Avro
