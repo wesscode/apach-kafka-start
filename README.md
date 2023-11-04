@@ -1,6 +1,6 @@
 # Apache Kafka
 
-## App para visualização gráfica do cluster 
+### App para visualização gráfica do cluster 
 <a href="https://www.kafkatool.com/" target="_blank">OffsetExplore</a>
 
 ### Definição ouvintes(*Ouvinte é uma combinação de host+porta+protocolo*)
@@ -12,9 +12,32 @@
 - SASL_PLAINTEXT: autenticado mas não criptográfado.
 - SSL: criptografado e autenticado.
 
-## Fator de replicação
+# Cluster Apache Kafka:
+### Broker
+- É o servidor do Kafka, responsável por receber as mensagens dos producers, escrever as mensagens no disco e disponibilizar para os consumers
+   
+### Tópicos
+- É uma forma de rotular ou categorizar uma mensagem.
+- Quanto mais partições em um tópico aumenta a performance de leitura e escrita daquele tópico.
+  
+### Partição
+- É uma sequência imutável e ordenada de mensagens e cada mensagem recebe uma identificação numérica sequencial que chamamos de offset
+
+### Offsets
+- Posição da mensagem dentro de uma partição
+
+### Fator de replicação(replication factor)
+- Replicação de informação de uma partição para os demais brokers.
 - Nós proporciona garantia de uma maior disponibilidade do sistema.
 - Tendo seu tamanho máx até a quantidade de brokers do cluster.
+  
+## Kafka com dotnet
+*executar docker-compose-schema-registry*
 
-## Tópicos
-- Quanto mais partições em um tópico aumenta a performance de leitura e escrita daquele tópico.
+**- Instalar dependências para o projeto Consumidor**
+
+     dotnet add Projeto package Confluent.Consumer
+
+**- Instalar dependências para o projeto Produtor**
+
+     dotnet add Projeto package Confluent.Producer
