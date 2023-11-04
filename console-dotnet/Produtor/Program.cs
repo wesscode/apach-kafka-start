@@ -7,9 +7,9 @@ using var producer = new ProducerBuilder<string, string>(config).Build();
 var message = new Message<string, string>
 {
     Key = Guid.NewGuid().ToString(),
-    Value = $"Mensagem teste {Guid.NewGuid().ToString()}"
+    Value = $"Mensagem teste {DateTime.Now.Second}"
 };
 
 var result = await producer.ProduceAsync("topico-teste", message);
 
-Console.WriteLine($"Partição: ${result.Partition} OffSet: {result.Offset}");
+Console.WriteLine($"Partição: {result.Partition} - OffSet: {result.Offset}");
