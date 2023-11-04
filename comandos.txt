@@ -24,10 +24,10 @@ bin/kafka-topics.sh --create --topic chat --bootstrap-server localhost:9094 --pa
 bin/kafka-topics.sh --alter --topic chat --bootstrap-server localhost:9094 --partitions 3
 
 - Producer mensagens
-kafka-console-producer --topic=chat --bootstrap-server:localhost:9094
+kafka-console-producer.sh --topic=chat --bootstrap-server:localhost:9094
 
 - Consumer mensagens(Comandos dentro de um broker)
-kafka-console-consumer --topic=chat --bootstrap-server=localhost:9094
+kafka-console-consumer.sh --topic=chat --bootstrap-server=localhost:9094
 
 - Consumer mensagens antigas ou já lidas.
 kafka-console-consumer --topic=chat --bootstrap-server=localhost:9094 --from-beginning
