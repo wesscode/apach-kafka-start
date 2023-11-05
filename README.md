@@ -49,3 +49,12 @@
 **- Instalar  Ferramenta que informa ao produtor e consumidor qual serializar ele irá deve utilizar e responsável por se comunicar com servidor do schemaRegistry**
 
     dotnet add Projeto package Confluent.SchemaRegistry.Serdes.Avro
+
+<a href="https://avro.apache.org/" target="_blank">doc-apache-avro</a>
+
+**- Criar classe a partir de um schema AVRO(.avsc)**
+
+    avrogen -s ../Avros/Arquivos.avsc CaminhoOndeCriarClasse
+
+
+    
