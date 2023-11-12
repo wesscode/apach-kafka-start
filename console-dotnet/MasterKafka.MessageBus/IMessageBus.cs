@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MasterKafka.MessageBus.Message;
 
 namespace MasterKafka.MessageBus
 {
-    internal interface IMessageBus
+    public interface IMessageBus : IDisposable
     {
+        Task ProducerAsync<T>(string topic, T message) where T : IntegrationEvent;
+        Task ConsumerAsync<T>(string topic, Func<T, Task> onMessage, CancellationToken cancellationToken) where T : IntegrationEvent;
     }
 }
