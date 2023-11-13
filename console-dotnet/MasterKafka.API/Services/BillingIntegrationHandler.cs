@@ -13,28 +13,26 @@ namespace MasterKafka.API.Services
             _serviceProvider = serviceProvider;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            throw new NotImplementedException();
+           await SetSubscribersAsync(stoppingToken);
         }
 
-        //private async Task SetSubscribersAsync()
-        //{
-        //    await _bus.ConsumerAsync<OrderCanceledIntegrationEvent>("OrderCanceled", CancelTransaction);
+        private async Task SetSubscribersAsync(CancellationToken stoppingToken)
+        {
+           await _bus.ConsumerAsync<OrderCanceledIntegrationEvent>("OrderCanceled", CancelTransaction, stoppingToken);
+        }
 
-        //    await _bus.SubscribeAsync<OrderLoweredStockIntegrationEvent>("UpdateStockOrder", CapturePayment);
-        //}
-
-        private async Task CancelTransaction(string order)
+        private async Task CancelTransaction(OrderCanceledIntegrationEvent message)
         {
             using var scope = _serviceProvider.CreateScope();
 
             var pagamentoService = scope.ServiceProvider.GetRequiredService<IBillingService>();
 
-            var response = await pagamentoService.CancelTransaction(123);
+            var response = await pagamentoService.CancelTransaction(message.OrderId);
 
             if (response is not null)
-                throw new Exception($"Failed to cancel order payment {order}");
+                throw new Exception($"Failed to cancel order payment {message.OrderId}");
         }
     }
 }

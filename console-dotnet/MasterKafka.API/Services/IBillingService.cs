@@ -2,6 +2,6 @@
 {
     public interface IBillingService
     {
-        Task<string> CancelTransaction(int orderId);
+        Task<string> CancelTransaction(Guid orderId);
     }
 }

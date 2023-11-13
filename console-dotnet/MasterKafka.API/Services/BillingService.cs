@@ -2,7 +2,7 @@
 {
     public class BillingService : IBillingService
     {
-        public async Task<string> CancelTransaction(int orderId)
+        public async Task<string> CancelTransaction(Guid orderId)
         {
             //implementar cancelamento.
 
