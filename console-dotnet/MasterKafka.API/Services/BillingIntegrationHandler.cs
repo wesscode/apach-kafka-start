@@ -21,6 +21,8 @@ namespace MasterKafka.API.Services
         private async Task SetSubscribersAsync(CancellationToken stoppingToken)
         {
            await _bus.ConsumerAsync<OrderCanceledIntegrationEvent>("OrderCanceled", CancelTransaction, stoppingToken);
+
+            await _bus.ConsumerAsync<OrderLoweredStockIntegrationEvent>("UpdateStockOrder", CapturePayment, stoppingToken);
         }
 
         private async Task CancelTransaction(OrderCanceledIntegrationEvent message)
@@ -33,6 +35,11 @@ namespace MasterKafka.API.Services
 
             if (response is not null)
                 throw new Exception($"Failed to cancel order payment {message.OrderId}");
+        }
+
+        private async Task CapturePayment(OrderLoweredStockIntegrationEvent message)
+        {
+            await _bus.ProducerAsync("OrderPaid", new OrderPaidIntegrationEvent(message.CustomerId, message.OrderId));
         }
     }
 }
