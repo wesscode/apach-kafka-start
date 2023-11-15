@@ -59,13 +59,23 @@
 ## Avançado
 - Criar serializado/deserializador customizado
 - Producer Acknowledgements
-    - 0 :None
-    - 1 : Leader
-    - -1: All
+    **- None**:
+        * Não possuimos a garantia da entrega da mensagem, mas garantimos uma melhor peformance.
+
+    **- Leader**:
+        * Kafka garante que a mensagem foi recebida e registrada no broker.
+
+    **- All**:
+        * Maior garantia que a mensagem foi recebida. Pois a mesma é replicada em mais de um broker.
+        Garatindo que o replication factory estejam sincronizadas. Essa opção possui degradação da performance, porém sua garantia de entrega é muito eficiênte.
+
 - Autor offset reset
 - Ordernação de mensagens no kafka
 - Consumir mensagens no kafka mais de uma vez
 - Idempotência
 - Trabalhar com transações
 - Headers e Traincing
-    
+
+
+### Apoio
+<a href="https://renatogroffe.medium.com/net-apache-kafka-guia-de-refer%C3%AAncia-3f82512df4c" target="_blank">artigo</a>
