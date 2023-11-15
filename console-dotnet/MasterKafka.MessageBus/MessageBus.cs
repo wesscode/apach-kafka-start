@@ -21,16 +21,18 @@ namespace MasterKafka.MessageBus
             };
 
             //mensagem serializada para enviar
-            var payload = JsonSerializer.Serialize(message);
+           // var payload = JsonSerializer.Serialize(message);
 
             //inicializando producer
-            var producer = new ProducerBuilder<string, string>(config).Build();
+            var producer = new ProducerBuilder<string, T>(config)
+            .SetValueSerializer(new SerializerApp<T>())
+            .Build();
 
             //chamada do método para enviar a mensagem
-            var result = await producer.ProduceAsync(topic, new Message<string, string>
+            var result = await producer.ProduceAsync(topic, new Message<string, T>
             {
                 Key = Guid.NewGuid().ToString(),
-                Value = payload
+                Value = message
             });
 
             await Task.CompletedTask;
@@ -48,7 +50,9 @@ namespace MasterKafka.MessageBus
                     EnablePartitionEof = true //notifica o final da partição
                 };
 
-                using var consumer = new ConsumerBuilder<string, string>(config).Build();
+                using var consumer = new ConsumerBuilder<string, T>(config)
+                .SetValueDeserializer(new DeserializerApp<T>())
+                .Build();
 
                 consumer.Subscribe(topic); //se increvendo no tópico.
 
@@ -58,9 +62,9 @@ namespace MasterKafka.MessageBus
                     if (result.IsPartitionEOF) //verifica se não está no final da partição
                         continue;
 
-                    var message = JsonSerializer.Deserialize<T>(result.Message.Value);
+                    //var message = JsonSerializer.Deserialize<T>(result.Message.Value);
 
-                    await onMessage(message);
+                    await onMessage(result.Message.Value);
                     consumer.Commit();
 
                 }
