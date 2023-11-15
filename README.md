@@ -59,6 +59,9 @@
 ## Avançado
 - Criar serializado/deserializador customizado
 - Producer Acknowledgements
+    - 0 :None
+    - 1 : Leader
+    - -1: All
 - Autor offset reset
 - Ordernação de mensagens no kafka
 - Consumir mensagens no kafka mais de uma vez
