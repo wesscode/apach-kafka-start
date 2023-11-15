@@ -56,5 +56,13 @@
 
     avrogen -s ../Avros/Arquivos.avsc CaminhoOndeCriarClasse
 
-
+## Avançado
+- Criar serializado/deserializador customizado
+- Producer Acknowledgements
+- Autor offset reset
+- Ordernação de mensagens no kafka
+- Consumir mensagens no kafka mais de uma vez
+- Idempotência
+- Trabalhar com transações
+- Headers e Traincing
     
