@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "migracao-dev-store", "migra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka-avancado", "kafka-avancado", "{EEC23184-CC3C-4319-9BA2-B97C2E395ABA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka.Tips", "Kafka.Tips\Kafka.Tips.csproj", "{18892486-A80E-4714-B2A3-68BB5EDD2230}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{80471C08-2292-46A5-A33F-326737F272A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80471C08-2292-46A5-A33F-326737F272A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80471C08-2292-46A5-A33F-326737F272A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18892486-A80E-4714-B2A3-68BB5EDD2230}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18892486-A80E-4714-B2A3-68BB5EDD2230}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18892486-A80E-4714-B2A3-68BB5EDD2230}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18892486-A80E-4714-B2A3-68BB5EDD2230}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{D5510410-47A9-4AFB-B05E-BE6AF9650760} = {275123F7-68DE-4D2B-8A8A-0C07EDA50F36}
 		{1816A2E5-D44C-4D03-BD60-B1099E1E7F0C} = {FEB32E35-8C4C-4717-A020-7071D5DFF17B}
 		{80471C08-2292-46A5-A33F-326737F272A9} = {FEB32E35-8C4C-4717-A020-7071D5DFF17B}
+		{18892486-A80E-4714-B2A3-68BB5EDD2230} = {EEC23184-CC3C-4319-9BA2-B97C2E395ABA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57ADFF75-6280-4BCE-B471-D8A9CF9F41DE}
