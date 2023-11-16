@@ -67,9 +67,14 @@
 
     **- All**:
         * Maior garantia que a mensagem foi recebida. Pois a mesma é replicada em mais de um broker.
-        Garatindo que o replication factory estejam sincronizadas. Essa opção possui degradação da performance, porém sua garantia de entrega é muito eficiênte.
+        Garatindo que o replication factory estejam sincronizadas. Essa opção possui deadação da performance, porém sua garantia de entrega é muito eficiênte.
 
-- Autor offset reset
+- AutoOffsetReset
+    **- Earliest**:
+        * Ao inserir um novo grupo de consumidor, e declaro esse prop no AutoOffSetReset, todas as mensagens um dia gerada naquele tópico serão reprocessadas e lidas por esse novo grupo.
+    **- Latest**:
+        * Ao inserir um novo grupo de consumidor, e declaro esse prop no AutoOffSetReset, as mensagens so serão consumidas a partir daquele momento, tudo que virá a ser produzido.
+
 - Ordernação de mensagens no kafka
 - Consumir mensagens no kafka mais de uma vez
 - Idempotência
