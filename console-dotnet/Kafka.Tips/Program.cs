@@ -1,7 +1,9 @@
 using Confluent.Kafka;
 
-const string Topico = "desenvolvedor.io";
 
+#region  EXEMPLO TIPO DE CONSUMO (AutoOffReset: Earliest, Latest)
+/*
+const string Topico = "desenvolvedor.io";
 var i = 1;
 
 for (i = 1; i <= 5; i++)
@@ -82,11 +84,12 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
 
         consumer.Commit(result);
     }
-}
+}*/
 
+#endregion
+
+#region APLICANDO EXEMPLOS DE TIPOS DE ACKS: None, Leader, All.
 /*
---- Aplicando exemplos de tipos de Acks: None, Leader, All.
-
 const string Topico = "desenvolvedor.io";
 
 var configuracao = new ProducerConfig
@@ -105,9 +108,11 @@ try
     {
         Value = mensagem
     });
+    //colocar break point aqui para ver os tipos de acks no status
 }
 catch(Exception ex)
 {
     Console.Error.WriteLine(ex.ToString());
 }
 */
+#endregion
