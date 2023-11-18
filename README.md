@@ -82,9 +82,10 @@
     
 - Idempotência
     * Habilitando a idempotência Kafka garante que a mensagem vai ser entregue somente uma vez. Evitamos a duplicidade.
-    
+
 - Trabalhar com transações
-    * Garantimos o tudo ou nada no envio das mensagens para o kafka. Onde a mensagem só será enviada e armazenada no tópico quando **Commitada a transação**. Podendo também dar **Rollback**
+    * Garantimos o tudo ou nada! Quando enviamos uma mensagem, só será formalizado a confirmação de mensagem recebida/registrada no tópico, quando a transação for **Commitada**. Podendo também dar **Rollback**
+    
 - Headers e Traincing
 
 

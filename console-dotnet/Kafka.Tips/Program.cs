@@ -1,7 +1,8 @@
 using Confluent.Kafka;
 
-#region Trabalhando com transações
-    const string Topico = "desenvolvedor.io";
+#region Trabalhando com transações.
+
+const string Topico = "desenvolvedor.io";
 var i = 1;
 
 _ = Task.Run(() => Consumir("grupo4", AutoOffsetReset.Latest));
@@ -21,7 +22,9 @@ static async Task Produzir(int i)
         BootstrapServers = "localhost:9092",
         Acks = Acks.All, //envia replica da mensagem para todos os novos replication factors
         MaxInFlight = 1, //determina a quantidade de conexões na sessão estabelecida
-        MessageSendMaxRetries = 2 //Garante que se houver alguma instabilidade, a mensagem tentará ser enviada 2x(opcional para idempotência)
+        MessageSendMaxRetries = 2, //Garante que se houver alguma instabilidade, a mensagem tentará ser enviada 2x(opcional para idempotência)
+
+        TransactionalId = Guid.NewGuid().ToString() //Necessário para trabalhar com transações
     };
     var key = Guid.NewGuid().ToString();
     var mensagem = $"Mensagem ( {i} ) KEY: {key}";
@@ -32,10 +35,28 @@ static async Task Produzir(int i)
     {
         using var producer = new ProducerBuilder<string, string>(configuracao).Build();
 
+        //Iniciar uma transação
+         producer.InitTransactions(TimeSpan.FromSeconds(5));
+         producer.BeginTransaction();
+
+        //Envia mensagem 1
         var result = await producer.ProduceAsync(Topico, new Message<string, string>
         {
             Value = mensagem
         });
+
+        //Envia mensagem 2
+
+        //Envia mensagem 3
+
+        //Atualiza o banco
+
+
+        //confirma a transação
+        producer.CommitTransaction();
+
+        //abortar a transação
+        producer.AbortTransaction();
 
         await Task.CompletedTask;
     }
@@ -57,7 +78,10 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
         AutoOffsetReset = autoOffsetReset,
         EnablePartitionEof = true,
         EnableAutoCommit = false,
-        EnableAutoOffsetStore = false //offset não vai ser deslocada automaticamente
+        EnableAutoOffsetStore = false, //offset não vai ser deslocada automaticamente
+
+        // Configuração para consumir somente mensagens confirmadas.
+        IsolationLevel = IsolationLevel.ReadUncommitted
     };
 
     using var consumer = new ConsumerBuilder<string, string>(conf).Build();
