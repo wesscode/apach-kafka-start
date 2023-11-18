@@ -81,6 +81,7 @@
     * uma mensagem que foi lida mas não commitada, seu offset no kafka é deslocado, logo, o consumidor não consiguirar ler novamente, a não ser que reinicie o serviço. Porque uma mensagem lida mas não commitada ela fica como **não processada no kafka**. Podendo ser lida novamente quando o consumidor utiliza o método **Seek** para voltar o ponteiro para a mensagem não processada, assim não precisa reiciar o serviço.
     
 - Idempotência
+    * Habilitando a idempotência Kafka garante que a mensagem vai ser entregue somente uma vez. Evitamos a duplicidade.
 - Trabalhar com transações
 - Headers e Traincing
 

@@ -1,5 +1,7 @@
 using Confluent.Kafka;
 
+#region Consumindo mensagem no Kafka mais de uma vez, quando a mesma ainda não foi commitada.
+/*
 const string Topico = "desenvolvedor.io";
 var i = 1;
 
@@ -98,6 +100,8 @@ static bool ProcessarMensagem(ConsumeResult<string, string> result)
     Task.Delay(2000).Wait();
     return false;
 }
+*/
+#endregion
 
 #region  EXEMPLO TIPO DE CONSUMO (AutoOffReset: Earliest, Latest)
 /*
