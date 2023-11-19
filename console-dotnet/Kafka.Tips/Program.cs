@@ -1,5 +1,10 @@
 using Confluent.Kafka;
 
+#region Aplicando Headers e Tracing
+
+
+#endregion
+
 #region Trabalhando com transações.
 /*
 const string Topico = "desenvolvedor.io";
@@ -46,16 +51,13 @@ static async Task Produzir(int i)
         });
 
         //Envia mensagem 2
-
         //Envia mensagem 3
-
         //Atualiza o banco
-
 
         //confirma a transação
         producer.CommitTransaction();
 
-        //abortar a transação
+        //aborta a transação
         producer.AbortTransaction();
 
         await Task.CompletedTask;
@@ -78,17 +80,13 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
         AutoOffsetReset = autoOffsetReset,
         EnablePartitionEof = true,
         EnableAutoCommit = false,
-        EnableAutoOffsetStore = false, //offset não vai ser deslocada automaticamente
 
         // Configuração para consumir somente mensagens confirmadas.
         IsolationLevel = IsolationLevel.ReadUncommitted
     };
 
     using var consumer = new ConsumerBuilder<string, string>(conf).Build();
-
     consumer.Subscribe(Topico);
-
-    int Tentativas = 0;
 
     while (true)
     {
@@ -99,32 +97,8 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
 
         var message = "<< Recebida: \t" + result.Message.Value;
         Console.WriteLine(message);
-
-        //Tentar processar mesagem
-        Tentativas++;
-
-        if(!ProcessarMensagem(result) && Tentativas < 3)
-        {
-            consumer.Seek(result.TopicPartitionOffset); //move o ponteiro offset do kafka, para essa mensagem ser lida novamente no próximo consumo.
-            continue;
-        }
-
-        if(Tentativas > 1)
-        {
-            //Publicar mensagem em uma fila para analise!
-            Console.WriteLine("Enviando mensagem para: DeadLetter");
-            Tentativas = 0;
-        }
-
         consumer.Commit(result);
     }
-}
-
-static bool ProcessarMensagem(ConsumeResult<string, string> result)
-{
-    Console.WriteLine($"KEY: {result.Message.Key} - {DateTime.Now}");
-    Task.Delay(2000).Wait();
-    return false;
 }
 */
 #endregion
@@ -147,8 +121,10 @@ static async Task Produzir(int i)
 {
     var configuracao = new ProducerConfig
     {
-        //Habilitando idempotêcia
         BootstrapServers = "localhost:9092",
+
+        //Habilitando idempotêcia
+        EnableIdempotence = true,
         Acks = Acks.All, //envia replica da mensagem para todos os novos replication factors
         MaxInFlight = 1, //determina a quantidade de conexões na sessão estabelecida
         MessageSendMaxRetries = 2 //Garante que se houver alguma instabilidade, a mensagem tentará ser enviada 2x(opcional para idempotência)
@@ -186,51 +162,23 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
         BootstrapServers = "localhost:9092",
         AutoOffsetReset = autoOffsetReset,
         EnablePartitionEof = true,
-        EnableAutoCommit = false,
-        EnableAutoOffsetStore = false //offset não vai ser deslocada automaticamente
+        EnableAutoCommit = false
     };
 
     using var consumer = new ConsumerBuilder<string, string>(conf).Build();
-
     consumer.Subscribe(Topico);
-
-    int Tentativas = 0;
 
     while (true)
     {
         var result = consumer.Consume();
-
         if (result.IsPartitionEOF)
             continue;
 
         var message = "<< Recebida: \t" + result.Message.Value;
         Console.WriteLine(message);
 
-        //Tentar processar mesagem
-        Tentativas++;
-
-        if(!ProcessarMensagem(result) && Tentativas < 3)
-        {
-            consumer.Seek(result.TopicPartitionOffset); //move o ponteiro offset do kafka, para essa mensagem ser lida novamente no próximo consumo.
-            continue;
-        }
-
-        if(Tentativas > 1)
-        {
-            //Publicar mensagem em uma fila para analise!
-            Console.WriteLine("Enviando mensagem para: DeadLetter");
-            Tentativas = 0;
-        }
-
         consumer.Commit(result);
     }
-}
-
-static bool ProcessarMensagem(ConsumeResult<string, string> result)
-{
-    Console.WriteLine($"KEY: {result.Message.Key} - {DateTime.Now}");
-    Task.Delay(2000).Wait();
-    return false;
 }*/
 #endregion
 
@@ -313,7 +261,7 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
 
         if(!ProcessarMensagem(result) && Tentativas < 3)
         {
-            consumer.Seek(result.TopicPartitionOffset); //move o ponteiro offset do kafka, para essa mensagem ser lida novamente no próximo consumo.
+            consumer.Seek(result.TopicPartitionOffset); //Especificando a partição e o offset que o kafka deve consumir. Força o kafka ler essa mensagem novamente.
             continue;
         }
 
@@ -325,6 +273,7 @@ static void Consumir(string grupoId, AutoOffsetReset autoOffsetReset)
         }
 
         consumer.Commit(result);
+        consumer.StoreOffset(result.TopicPartitionOffset); //Movo o offset dessa mensagem, pro kafka volta a consumir as próximas mensagens.
     }
 }
 
@@ -337,7 +286,7 @@ static bool ProcessarMensagem(ConsumeResult<string, string> result)
 */
 #endregion
 
-#region  EXEMPLO TIPO DE CONSUMO (AutoOffReset: Earliest, Latest)
+#region  EXEMPLO TIPOS DE CONSUMO (AutoOffReset: Earliest, Latest)
 /*
 const string Topico = "desenvolvedor.io";
 var i = 1;
