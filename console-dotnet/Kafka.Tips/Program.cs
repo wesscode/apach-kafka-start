@@ -1,7 +1,7 @@
 using Confluent.Kafka;
 
 #region Trabalhando com transações.
-
+/*
 const string Topico = "desenvolvedor.io";
 var i = 1;
 
@@ -126,6 +126,7 @@ static bool ProcessarMensagem(ConsumeResult<string, string> result)
     Task.Delay(2000).Wait();
     return false;
 }
+*/
 #endregion
 
 #region Habilitando idempotência (Garatia de não exitir replicas da nossa mensagem)

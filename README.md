@@ -87,6 +87,7 @@
     * Garantimos o tudo ou nada! Quando enviamos uma mensagem, só será formalizado a confirmação de mensagem recebida/registrada no tópico, quando a transação for **Commitada**. Podendo também dar **Rollback**
     
 - Headers e Traincing
+    * Enviar informações adicionais que não fazem parte da mensagem. Um Header como exemplo, o nome da aplicação que produziu o evento, um id de rastreamento da mensagem ou qualquer outra informação extra que deseja enviar no evento produzido.
 
 
 ### Apoio
