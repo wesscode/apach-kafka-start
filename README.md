@@ -92,3 +92,5 @@
 
 ### Apoio
 <a href="https://renatogroffe.medium.com/net-apache-kafka-guia-de-refer%C3%AAncia-3f82512df4c" target="_blank">artigo</a>
+<a href="https://kafka.apache.org/downloads" target="_blank">download kafka</a>
+<a href="https://www.hostinger.com.br/tutoriais/como-instalar-java-no-ubuntu" target="_blank">install java no ubuntu</a>
